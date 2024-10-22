@@ -1,13 +1,186 @@
 body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.container.game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 700px; /* Đặt kích thước cố định cho khung hình */
+  height: 600px; /* Đặt kích thước cố định cho khung hình */
+}
+
+.status {
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 24px; /* Tăng kích thước chữ */
+  font-weight: bold; /* Tăng độ đậm của chữ */
+  color: #007bff; /* Màu xanh dương */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Thêm bóng chữ */
+  transition: color 0.3s ease, transform 0.3s ease; /* Thêm hiệu ứng chuyển đổi */
+}
+
+.status:hover {
+  color: #0056b3; /* Thay đổi màu khi hover */
+  transform: scale(1.05); /* Tăng kích thước khi hover */
+}
+
+.status.winner {
+  color: #28a745; /* Màu xanh lá cây */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Thêm bóng chữ */
+}
+
+.status.draw {
+  color: #ffc107; /* Màu vàng */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Thêm bóng chữ */
+}
+
+.row-config {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.game {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
+}
+
+.game-board {
+  margin-right: 20px;
+}
+
+.game-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.li {
+  display: flex;
+  justify-content: center;
+}
+
+.moves-list-container {
+  max-height: 450px; /* Đặt chiều cao tối đa cho phần lịch sử */
+  overflow-y: auto; /* Thêm tính năng cuộn dọc */
+  width: 100%;
+  height: 450px;
+  display: flex;
+  justify-content: center;
+}
+
+.moves-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.moves-list li {
+  margin-bottom: 10px;
+}
+
+.moves-list button {
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  height: 100%;
+}
+
+.moves-list button:hover {
+  background-color: #0056b3;
+}
+
+.board-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.square {
+  width: 75px;
+  height: 75px;
+  background-color: #fff;
+  border: 2px solid #007bff;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 50px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.square:focus {
+  outline: none;
+}
+
+.square:hover {
+  background-color: #e0e0e0;
+}
+/* CSS for the sort button */
+.sort-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-bottom: 10px;
+}
+/* CSS for highlighting winning squares */
+.highlight {
+  background-color: #ffeb3b; /* Bright yellow background */
+  border: 2px solid #ff9800; /* Orange border */
+  transform: scale(1.1); /* Slightly larger */
+  box-shadow: 0 0 10px rgba(255, 152, 0, 0.5); /* Glowing effect */
+  transition: background-color 0.3s ease, transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.current-move {
+  font-size: 18px; /* Tăng kích thước chữ */
+  font-weight: bold; /* Tăng độ đậm của chữ */
+  color: #17a2b8; /* Màu xanh dương nhạt */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Thêm bóng chữ */
+  transition: color 0.3s ease, transform 0.3s ease; /* Thêm hiệu ứng chuyển đổi */
+}
+
+.current-move:hover {
+  color: #138496; /* Thay đổi màu khi hover */
+  transform: scale(1.05); /* Tăng kích thước khi hover */
+}
+/* CSS for draw effect */
+.draw-effect {
+  animation: draw-animation 1s infinite alternate;
+}
+
+@keyframes draw-animation {
+  0% {
+    background-color: #fff;
+  }
+  100% {
+    background-color: #ffc107;
+  }
 }
